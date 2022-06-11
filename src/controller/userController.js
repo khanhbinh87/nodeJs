@@ -1,10 +1,9 @@
+import userService from "../service/userService";
 
-import userService from '../service/userService'
+const UserController = async (req, res) => {
+  let userList = await userService.getUser();
 
-
-
-const UserController = (req, res) => {
-  return res.render("user.ejs");
+  return res.render("user.ejs", { userList });
 };
 const CreateUserController = (req, res) => {
   let email = req.body.email;
@@ -12,7 +11,6 @@ const CreateUserController = (req, res) => {
   let username = req.body.username;
 
   // userService.creatNewUser(email,password,username)
-  userService.getUser();
 
   return res.render("user.ejs");
 };
