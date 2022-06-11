@@ -9,15 +9,24 @@ const hasUserPassword = (password) => {
 
 // query database
 
-const creatNewUser = (email, password, username) => {
+const creatNewUser = async (email, password, username) => {
   const hasPaswword = hasUserPassword(password);
-  //   connection.query(
-  //     "INSERT INTO users(email,password,username) VALUES (?,?,?)",
-  //     [email, hasPaswword, username],
-  //     function (err, results, fields) {
-  //       console.log(results);
-  //     }
-  //   );
+  const connection = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    database: "jwt",
+    Promise: bluebird,
+  });
+  try {
+    const [rows, fields] = await connection.execute(
+      "INSERT INTO users(email,password,username) VALUES (?,?,?)",
+      [email, hasPaswword, username]
+    );
+
+    return rows;
+  } catch (error) {
+    console.log(error);
+  }
 };
 const getUser = async () => {
   const connection = await mysql.createConnection({
@@ -33,8 +42,23 @@ const getUser = async () => {
     console.log(error);
   }
 };
-
+const deleteUser = async (id) => {
+  const connection = await mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    database: "jwt",
+    Promise: bluebird,
+  });
+  try {
+    // DELETE FROM Customers WHERE CustomerName='Alfreds Futterkiste';
+    const [rows, fields] = await connection.execute("DELETE FROM users WHERE id=?",[id]);
+    return rows;
+  } catch (error) {
+    console.log(error);
+  }
+};
 module.exports = {
   creatNewUser,
   getUser,
+  deleteUser
 };

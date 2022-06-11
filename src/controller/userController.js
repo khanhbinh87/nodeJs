@@ -10,11 +10,17 @@ const CreateUserController = (req, res) => {
   let password = req.body.password;
   let username = req.body.username;
 
-  // userService.creatNewUser(email,password,username)
+  userService.creatNewUser(email,password,username)
 
-  return res.render("user.ejs");
+  return res.redirect('/user')
 };
+const DeleteUserController = async(req,res) =>{
+  await userService.deleteUser(req.params.id);
+  
+  return res.redirect('/user')
+}
 module.exports = {
   UserController,
   CreateUserController,
+  DeleteUserController
 };
