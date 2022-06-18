@@ -42,4 +42,11 @@ const registerApi = async(req, res) => {
     });
   }
 };
-module.exports = { testApi, registerApi };
+const handleLogin = async (req, res) => {
+    console.log(req.body);
+    return res.status(200).json({
+        message:"ok",
+        data: "test api"
+    })
+}
+module.exports = { testApi, registerApi ,handleLogin};

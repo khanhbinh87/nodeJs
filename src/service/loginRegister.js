@@ -41,7 +41,7 @@ const login = async (rawUser) => {
     //hasUserPassword
     let hasPaswword = hasUserPassword(rawUser.password);
     //create a new user account
-    console.log('rauseremai',rawUser.email);
+
     await db.User.create({
       email: rawUser.email,
       password: hasPaswword,
